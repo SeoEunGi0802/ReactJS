@@ -53,12 +53,13 @@ class MyClock extends React.Component {
         return (
             <div className="clockBox">
                 <div>
+                    <h1>{this.props.text}</h1>
                     <div className="date_y">{yyyy}</div>
                     <div className="date_md">
                         {mm}-{dd}
                         <span className="dow">{getday()}</span>
                     </div>
-                    <span className="time">
+                    <span className="time" style={{color:this.props.color}}>
                         {h}:{m}:{s}
                     </span>
                     <span className="ms">{ms}</span>

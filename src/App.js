@@ -7,17 +7,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <MyClock />
-        <MyClock />
-        <MyClock />
-        <MyClock />
-        <MyClock />
-        <MyClock />
-        <MyClock />
-        <MyClock />
-        <MyClock />
-        <MyClock />
-        <MyClock />
+        <MyClock text="시계 1번" color="RED"/>
+        <MyClock text="시계 2번" color="ORANGE"/>
+        <MyClock text="시계 3번" color="YELLOW"/>
+        <MyClock text="시계 4번" color="GREEN"/>
+        <MyClock text="시계 5번" color="BLUE"/>
       </div>
     )
   }
