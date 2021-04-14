@@ -1,11 +1,13 @@
 import React from "react";
 import "./MyClock.css";
+import moment from 'moment';
 
 class MyClock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: new Date()
+            time: new Date(),
+            stopList: []
         };
     }
 
@@ -23,6 +25,12 @@ class MyClock extends React.Component {
 
     formatMsSet(data) {
         return data < 100 ? (data < 10 ? "00" + data : "0" + data) : data;
+    }
+
+    stopEventListner(){
+        this.setState({
+            stopList: this.state.stopList.concat(this.state.time)
+        })
     }
 
     render() {
@@ -63,6 +71,12 @@ class MyClock extends React.Component {
                         {h}:{m}:{s}
                     </span>
                     <span className="ms">{ms}</span>
+                    <ul>
+                        {this.state.stopList.map((entry, idx)=>{
+                        return <li key={idx}>{moment(entry).format("YYYY-MM-DD hh:mm:ss")}</li>
+                        })}
+                    </ul>
+                    <div className="button" onClick={this.stopEventListner.bind(this)}>Stop!</div>
                 </div>
             </div>
         );
