@@ -1,12 +1,13 @@
 import React from "react";
 import "./MyClock.css";
-import moment from 'moment';
+import moment, { now } from 'moment';
+import moment_timezome from 'moment-timezone';
 
 class MyClock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: new Date(),
+            time: moment().tz(this.props.zone),
             stopList: []
         };
     }
@@ -14,7 +15,7 @@ class MyClock extends React.Component {
     componentDidMount() {
         this.interval = setInterval(() => {
             this.setState({
-                time: new Date()
+                time: moment().tz(this.props.zone)
             });
         }, 50);
     }
@@ -27,53 +28,61 @@ class MyClock extends React.Component {
         return data < 100 ? (data < 10 ? "00" + data : "0" + data) : data;
     }
 
-    stopEventListner(){
+    stopEventListner() {
         this.setState({
             stopList: this.state.stopList.concat(this.state.time)
         })
     }
 
+    deleteEventListner(idx) {
+        alert(idx);
+    }
+
     render() {
         const { time } = this.state;
-        const h = this.formatSet(time.getHours());
-        const m = this.formatSet(time.getMinutes());
-        const s = this.formatSet(time.getSeconds());
-        const ms = this.formatMsSet(time.getMilliseconds());
-        const yyyy = time.getFullYear().toString();
-        const mm = this.formatSet(time.getMonth() + 1).toString();
-        const dd = this.formatSet(time.getDate().toString());
+        // const h = this.formatSet(time.getHours());
+        // const m = this.formatSet(time.getMinutes());
+        // const s = this.formatSet(time.getSeconds());
+        // const ms = this.formatMsSet(time.getMilliseconds());
+        // const yyyy = time.getFullYear().toString();
+        // const mm = this.formatSet(time.getMonth() + 1).toString();
+        // const dd = this.formatSet(time.getDate().toString());
 
-        function getday() {
-            const week = [
-                "일요일",
-                "월요일",
-                "화요일",
-                "수요일",
-                "목요일",
-                "금요일",
-                "토요일"
-            ];
+        // function getday() {
+        //     const week = [
+        //         "일요일",
+        //         "월요일",
+        //         "화요일",
+        //         "수요일",
+        //         "목요일",
+        //         "금요일",
+        //         "토요일"
+        //     ];
 
-            const today = time.getDay();
-            return week[today];
-        }
+        //     const today = time.getDay();
+        //     return week[today];
+        // }
 
         return (
             <div className="clockBox">
                 <div>
                     <h1>{this.props.text}</h1>
-                    <div className="date_y">{yyyy}</div>
+                    <h2>{this.props.zone}</h2>
+                    <div className="date_y">{time.format('YYYY')}</div>
                     <div className="date_md">
-                        {mm}-{dd}
-                        <span className="dow">{getday()}</span>
+                        {time.format('MM')}-{time.format('DD')}
+                        {/* <span className="dow">{getday()}</span> */}
                     </div>
-                    <span className="time" style={{color:this.props.color}}>
-                        {h}:{m}:{s}
+                    <span className="time" style={{ color: this.props.color }}>
+                        {time.format('hh')}:{time.format('mm')}:{time.format('ss')}
                     </span>
-                    <span className="ms">{ms}</span>
+                    <span className="ms">{time.format('SSS')}</span>
                     <ul>
-                        {this.state.stopList.map((entry, idx)=>{
-                        return <li key={idx}>{moment(entry).format("YYYY-MM-DD hh:mm:ss")}</li>
+                        {this.state.stopList.map((entry, idx) => {
+                            return <li key={idx}>{moment(entry).format("YYYY-MM-DD hh:mm:ss")}
+                            &nbsp;&nbsp;
+                            <span onClick={this.deleteEventListner.bind(this, idx)}>X</span>
+                            </li>
                         })}
                     </ul>
                     <div className="button" onClick={this.stopEventListner.bind(this)}>Stop!</div>
