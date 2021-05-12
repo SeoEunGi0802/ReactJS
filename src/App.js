@@ -4,7 +4,7 @@ import React from 'react';
 import MyClock from './MyClock';
 //import ParticlesBg from 'particles-bg';
 //import SnowStorm from 'react-snowstorm';
-import Board from 'Board';
+// import Board from './board';
 
 // let config = {
 //   num: [4, 7],
@@ -43,7 +43,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <MyClock text="시계 1번" zone="Seoul" color="RED" />
+        <MyClock text="시계 1번" zone="Asia/Seoul" color="RED" />
         <MyClock text="시계 2번" zone="Europe/London" color="ORANGE" />
         <MyClock text="시계 3번" zone="Africa/Cairo" color="YELLOW" />
         <MyClock text="시계 4번" zone="Antarctica/Vostok" color="GREEN" />

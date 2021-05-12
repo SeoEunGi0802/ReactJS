@@ -36,6 +36,7 @@ class MyClock extends React.Component {
 
     deleteEventListner(idx) {
         alert(idx);
+        console.log(idx)
     }
 
     render() {
@@ -64,7 +65,7 @@ class MyClock extends React.Component {
         // }
 
         return (
-            <div className="clockBox">
+            <div className="clockBox" style={{color:this.props.color}}>
                 <div>
                     <h1>{this.props.text}</h1>
                     <h2>{this.props.zone}</h2>
@@ -79,9 +80,17 @@ class MyClock extends React.Component {
                     <span className="ms">{time.format('SSS')}</span>
                     <ul>
                         {this.state.stopList.map((entry, idx) => {
-                            return <li key={idx}>{moment(entry).format("YYYY-MM-DD hh:mm:ss")}
-                            &nbsp;&nbsp;
-                            <span onClick={this.deleteEventListner.bind(this, idx)}>X</span>
+                            return <li key={idx}
+                                onMouseEnter={() => this.setState({ overIdx: idx })}
+                                onMouseLeave={() => this.setState({ overIdx: null })}
+                            >
+
+                                {time.format("YYYY-MM-DD hh:mm:ss")}
+                                {this.state.overIdx === idx ?
+                                    <span className="delet-btn" onClick={this.deleteEventListner.bind(this, idx)}>X</span>
+                                    :
+                                    null
+                                }
                             </li>
                         })}
                     </ul>
